@@ -82,13 +82,7 @@ function Cards({ tasks }) {
                 title={task.title}
                 description={task.description}
                 date={formattedDate}
-                status={
-                  task.status === "COMPLETED"
-                    ? "Completed"
-                    : task.status === "IN_PROGRESS"
-                    ? "In Progress"
-                    : ""
-                }
+                status={task.status}
               />
             );
           })
@@ -132,7 +126,13 @@ function Card({ id, title, description, date, status }) {
           <img src="/src/assets/timer.svg" alt="" />
           <span>{date}</span>
         </div>
-        <span className={styles.task_state}>{status}</span>
+        <span className={styles.task_state}>
+          {status === "COMPLETED"
+            ? "Completed"
+            : status === "IN_PROGRESS"
+            ? "In Progress"
+            : ""}
+        </span>
       </div>
     </div>
   );

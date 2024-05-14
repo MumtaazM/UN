@@ -25,30 +25,27 @@ export function TaskPage() {
     }
   }, [data]);
 
-  const updateTask = async (event) => {
-    event.preventDefault();
-
+  const updateTask = async (id) => {
     //change format of date for api
-    setTaskDeadline(taskDeadline.toISOString().split("T")[0]);
+    const fdate = taskDeadline.toISOString().split("T")[0];
 
     const task = {
       title: taskTitle,
       description: taskDescription,
-      deadline: taskDeadline,
+      deadline: fdate,
       status: taskStatus,
     };
 
+    console.log(task);
+
     try {
-      const response = await fetch(
-        `http://localhost:8080/api/tasks/${data.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(task),
-        }
-      );
+      const response = await fetch(`http://localhost:8080/api/tasks/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(task),
+      });
 
       if (response.status === 204) {
         console.log("Task updated successfully");
@@ -126,7 +123,8 @@ export function TaskPage() {
             id="create_task"
             className={styles.create_task}
             onClick={() => {
-              updateTask;
+              event.preventDefault();
+              updateTask(data.id);
             }}
           >
             Update
