@@ -103,6 +103,20 @@
     .create_task:hover {
       cursor: pointer;
     }
+
+    .delete_task {
+      background-color: white;
+      padding: 1.5rem;
+      color: rgb(205, 4, 4);
+      border: 2px solid rgb(205, 4, 4);
+      border-radius: 10px;
+      font-family: "Inter";
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .delete_task:hover {
+      cursor: pointer;
+    }
   }
 }
 

@@ -5,7 +5,9 @@ import jakarta.annotation.PostConstruct;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.util.Assert;
@@ -46,18 +48,33 @@ public class taskRepository {
     }
 
     void create(Task task) {
-        var updated = jdbcClient.sql("insert into task(id, title, description, deadline, status) values(?, ?, ?, ?, ?)")
-                .params(List.of(task.id(), task.title(), task.description(), task.deadline(), task.status().toString()))
-                .update();
-        Assert.isTrue(updated == 1, "Failed to create task " + task.title());
+        
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date deadline = formatter.parse(task.deadline());
+    
+            var updated = jdbcClient.sql("insert into task(title, description, deadline, status) values(?, ?, ?, ?)")
+                    .params(List.of(task.title(), task.description(), deadline, task.status().toString()))
+                    .update();
+            Assert.isTrue(updated == 1, "Failed to create task " + task.title());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     void update(Integer id, Task task) {
-        var updated = jdbcClient.sql("update task set id = ?, title = ?, description = ?, deadline = ?, status = ? where id = ?")
-                .params(List.of(task.id(), task.title(), task.description(), task.deadline(), task.status().toString(), id))
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+            Date deadline = formatter.parse(task.deadline());
+    
+            var updated = jdbcClient.sql("update task set title = ?, description = ?, deadline = ?, status = ? where id = ?")
+                .params(List.of(task.title(), task.description(), deadline, task.status().toString(), id))
                 .update();
 
-        Assert.isTrue(updated == 1, "Failed to create task " + task.title());
+            Assert.isTrue(updated == 1, "Failed to create task " + task.title());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     void delete(Integer id) {

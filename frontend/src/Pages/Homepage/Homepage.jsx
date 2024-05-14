@@ -7,10 +7,6 @@ export function Homepage() {
   const [tasks, setTasks] = useState([]);
   const [toggleState, setToggleState] = useState(1);
 
-  // const toggleTab = (index) => {
-  //   setToggleState(index);
-  // };
-
   const findCompletedTasks = (tasks) => {
     return tasks.filter((task) => task.status === "COMPLETED");
   };
@@ -71,7 +67,7 @@ function Cards({ tasks }) {
     <div className={styles.task_container}>
       <div className={styles.card_grid}>
         {Array.isArray(tasks) ? (
-          tasks.map((task, index) => {
+          tasks.map((task) => {
             let taskDate = new Date(task.deadline);
             let formattedDate = taskDate.toLocaleDateString("en-US", {
               year: "numeric",
@@ -81,11 +77,12 @@ function Cards({ tasks }) {
 
             return (
               <Card
-                key={index}
+                key={task.id}
+                id={task.id}
                 title={task.title}
                 description={task.description}
                 date={formattedDate}
-                state={
+                status={
                   task.status === "COMPLETED"
                     ? "Completed"
                     : task.status === "IN_PROGRESS"
@@ -103,14 +100,18 @@ function Cards({ tasks }) {
   );
 }
 
-function Card({ title, description, date, state }) {
+function Card({ id, title, description, date, status }) {
   const navigate = useNavigate();
 
+  //turn date into date object
+  const dateObject = new Date(date);
+
   const data = {
+    id: id,
     title: title,
     description: description,
-    date: date,
-    state: state,
+    date: dateObject,
+    status: status,
   };
 
   const toTaskPage = () => {
@@ -131,7 +132,7 @@ function Card({ title, description, date, state }) {
           <img src="/src/assets/timer.svg" alt="" />
           <span>{date}</span>
         </div>
-        <span className={styles.task_state}>{state}</span>
+        <span className={styles.task_state}>{status}</span>
       </div>
     </div>
   );

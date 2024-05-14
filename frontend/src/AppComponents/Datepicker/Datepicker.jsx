@@ -1,12 +1,10 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import "./Datepicker.scss";
 
-export default function Datepicker() {
-  const [selected, setSelected] = useState();
-
+export default function Datepicker({ selected, setSelected }) {
   let value;
   if (selected) {
     value = format(selected, "PP");
@@ -29,6 +27,7 @@ export default function Datepicker() {
           placeholder={format(new Date(), "y-MM-dd")}
           ref={dateInput}
           onFocus={handleBlur}
+          readOnly
         />
         <DayPicker mode="single" selected={selected} onSelect={setSelected} />
       </label>
