@@ -1,0 +1,2 @@
+INSERT INTO task (id, title, description, deadline, status) VALUES (1, 'Task 1', 'Description 1', '2021-12-31', 'COMPLETED');
+INSERT INTO task (id, title, description, deadline, status) VALUES (2, 'Task 1', 'Description 1', '2021-12-31', 'IN_PROGRESS');

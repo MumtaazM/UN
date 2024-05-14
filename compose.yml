@@ -1,0 +1,9 @@
+services:
+  postgres:
+    image: "postgres:latest"
+    environment:
+      - "POSTGRES_DB=union_notes"
+      - "POSTGRES_PASSWORD=password"
+      - "POSTGRES_USER=taaz"
+    ports:
+      - "5432:5432"
