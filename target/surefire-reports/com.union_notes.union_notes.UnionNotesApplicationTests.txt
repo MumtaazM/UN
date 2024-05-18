@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.union_notes.union_notes.UnionNotesApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 10.45 s -- in com.union_notes.union_notes.UnionNotesApplicationTests
