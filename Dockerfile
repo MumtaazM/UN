@@ -1,5 +1,5 @@
 # Start with a base image containing Java runtime
-FROM maven:3.6.3-openjdk-22
+FROM maven:3.6.3-openjdk-21
 
 # Make port 8080 available to the world outside this container
 EXPOSE 8080
