@@ -2,7 +2,7 @@ import styles from "./Homepage.module.scss";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export function Homepage() {
+export default function Homepage() {
   const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [toggleState, setToggleState] = useState(1);
@@ -15,7 +15,7 @@ export function Homepage() {
   };
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/tasks/")
+    fetch("https://union-notes.up.railway.app/api/tasks/")
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

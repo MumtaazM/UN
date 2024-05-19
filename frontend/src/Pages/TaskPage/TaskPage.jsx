@@ -39,13 +39,16 @@ export function TaskPage() {
     console.log(task);
 
     try {
-      const response = await fetch(`http://localhost:8080/api/tasks/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(task),
-      });
+      const response = await fetch(
+        `https://union-notes.up.railway.app/api/tasks/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(task),
+        }
+      );
 
       if (response.status === 204) {
         console.log("Task updated successfully");
@@ -60,9 +63,12 @@ export function TaskPage() {
 
   const deleteTask = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/tasks/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://union-notes.up.railway.app/api/tasks/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
       if (response.status === 204) {
         console.log("Task deleted successfully");
         navigate("/Homepage");

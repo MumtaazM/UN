@@ -6,7 +6,7 @@ import { useState } from "react";
 
 export function NewTaskPage() {
   // Define environment-specific API base URLs
-  const API_BASE_URL_DEV = "http://localhost:8080/api";
+  const API_BASE_URL_DEV = "https://union-notes.up.railway.app/api";
   // const API_BASE_URL_PROD = "https://your-production-api-url/api";
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
