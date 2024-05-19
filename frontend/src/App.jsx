@@ -4,7 +4,7 @@ import { Navbar } from "./AppComponents/Navbar/Navbar";
 import { NewTaskPage } from "./Pages/NewTaskPage/NewTaskPage";
 import { TaskPage } from "./Pages/TaskPage/TaskPage";
 import { Settings } from "./Pages/Settings/Settings";
-import { Homepage } from "./Pages/HomePage/Homepage";
+import { Homepage } from "./Pages/Homepage/Homepage";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
