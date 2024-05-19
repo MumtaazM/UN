@@ -2,7 +2,7 @@ import styles from "./Homepage.module.scss";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Homepage() {
+export function Homepage() {
   const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [toggleState, setToggleState] = useState(1);
@@ -164,5 +164,3 @@ function TaskBar({ toggleTab, toggleState }) {
     </nav>
   );
 }
-
-export default Homepage;
