@@ -5,9 +5,8 @@ import { useState } from "react";
 // import { format } from "date-fns";
 
 export function NewTaskPage() {
-  // Define environment-specific API base URLs
-  const API_BASE_URL_DEV = "https://union-notes.up.railway.app/api";
-  // const API_BASE_URL_PROD = "https://your-production-api-url/api";
+  const apiUrl = import.meta.env.VITE_BASE_API_URL;
+
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [taskState, setTaskState] = useState("IN_PROGRESS");
@@ -28,7 +27,7 @@ export function NewTaskPage() {
 
     console.log(task);
 
-    const response = await fetch(`${API_BASE_URL_DEV}/tasks`, {
+    const response = await fetch(`${apiUrl}/api/tasks`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

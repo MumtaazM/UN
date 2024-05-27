@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/union_notes
+    username: taaz
+    password: password
+    name: union notes
+
+  sql:
+    init:
+      mode: always

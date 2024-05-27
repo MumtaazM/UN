@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-UnionNotesApplication<union_notes>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.union_notes.union_notes.UnionNotesApplication",
+      "projectName": "union_notes",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

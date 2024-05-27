@@ -18,9 +18,9 @@ public class taskController {
         this.repository = repository;
     }
 
-    @GetMapping("/")
-    List<Task> findAll() {
-        return repository.findAll();
+    @GetMapping("/all/{id}")
+    List<Task> findAllByUserId(@PathVariable Integer id) {
+        return repository.findAllByUserId(id);
     }
 
     @GetMapping("/{id}")
@@ -31,16 +31,6 @@ public class taskController {
         } else {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Task not found");
         }
-    }
-
-    @GetMapping("/inprogress")
-    List<Task> findInProgress() {
-        return repository.findInProgress();
-    }
-
-    @GetMapping("/completed")
-    List<Task> findCompleted() {
-        return repository.findCompleted();
     }
 
     @ResponseStatus(HttpStatus.CREATED)

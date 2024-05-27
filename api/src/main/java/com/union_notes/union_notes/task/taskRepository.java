@@ -20,12 +20,12 @@ public class taskRepository {
         this.jdbcClient = jdbcClient;
     }
 
-    // private List<Task> tasks = new ArrayList<>();
     
-    List<Task> findAll() {
-        return jdbcClient.sql("select * from task")
-                .query(Task.class)
-                .list();
+    List<Task> findAllByUserId(Integer id) {
+        return jdbcClient.sql("select * from task where user_id = :id")
+            .param("id", id)
+            .query(Task.class)
+            .list();
     }
 
     Optional<Task> findById(Integer id) {
@@ -36,25 +36,14 @@ public class taskRepository {
         
     }
 
-    List<Task> findInProgress() {
-        return jdbcClient.sql("select * from task where status = 'IN_PROGRESS'")
-                .query(Task.class)
-                .list();
-    }
-    List<Task> findCompleted() {
-        return jdbcClient.sql("select * from task where status = 'COMPLETED'")
-                .query(Task.class)
-                .list();
-    }
-
     void create(Task task) {
         
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date deadline = formatter.parse(task.deadline());
     
-            var updated = jdbcClient.sql("insert into task(title, description, deadline, status) values(?, ?, ?, ?)")
-                    .params(List.of(task.title(), task.description(), deadline, task.status().toString()))
+            var updated = jdbcClient.sql("insert into task(title, description, deadline, status, user_id) values(?, ?, ?, ?, ?)")
+                    .params(List.of(task.title(), task.description(), deadline, task.status().toString(), 1))
                     .update();
             Assert.isTrue(updated == 1, "Failed to create task " + task.title());
         } catch (Exception e) {
@@ -67,8 +56,8 @@ public class taskRepository {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date deadline = formatter.parse(task.deadline());
     
-            var updated = jdbcClient.sql("update task set title = ?, description = ?, deadline = ?, status = ? where id = ?")
-                .params(List.of(task.title(), task.description(), deadline, task.status().toString(), id))
+            var updated = jdbcClient.sql("update task set title = ?, description = ?, deadline = ?, status = ?, user_id = ? where id = ?")
+                .params(List.of(task.title(), task.description(), deadline, task.status().toString(), 1, id))
                 .update();
 
             Assert.isTrue(updated == 1, "Failed to create task " + task.title());

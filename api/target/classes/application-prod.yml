@@ -8,9 +8,10 @@ spring:
   sql:
     init:
       mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
 
 server:
   address: 0.0.0.0
   port: ${PORT}
-
-spring.jpa.hibernate.ddl-auto: none

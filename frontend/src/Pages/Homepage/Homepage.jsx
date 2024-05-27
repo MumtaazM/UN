@@ -7,6 +7,8 @@ const Homepage = () => {
   const [tasks, setTasks] = useState([]);
   const [toggleState, setToggleState] = useState(1);
 
+  const apiUrl = import.meta.env.VITE_BASE_API_URL;
+
   const findCompletedTasks = (tasks) => {
     return tasks.filter((task) => task.status === "COMPLETED");
   };
@@ -14,8 +16,34 @@ const Homepage = () => {
     return tasks.filter((task) => task.status === "IN_PROGRESS");
   };
 
+  const token = JSON.parse(localStorage.getItem("token"));
+
+  function parseJwt(token) {
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map(function (c) {
+          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+
+    return JSON.parse(jsonPayload);
+  }
+
+  const userId = parseJwt(token.jwt).userId;
+
   useEffect(() => {
-    fetch("https://union-notes.up.railway.app/api/tasks/")
+    if (!token) {
+      navigate("/");
+    }
+    fetch(`${apiUrl}/api/tasks/all/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${token.jwt}`,
+      },
+    })
       .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -29,6 +57,7 @@ const Homepage = () => {
       })
       .catch((error) => {
         console.error("Error:", error);
+        console.log(`${apiUrl}/api/tasks/`);
         setLoading(false);
       });
   }, []);
