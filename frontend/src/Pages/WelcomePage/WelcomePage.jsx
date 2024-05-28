@@ -1,8 +1,8 @@
 import styles from "./WelcomePage.module.scss";
-import { CustomLink } from "../../helpers/Utils";
+import { CustomLink } from "../../helpers/CustomLink";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { set } from "date-fns";
+import { loginUser, registerUser } from "../../helpers/Api";
 
 export function WelcomePage() {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export function WelcomePage() {
 
   const apiUrl = "http://localhost:8080/";
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     const user = {
@@ -23,31 +23,17 @@ export function WelcomePage() {
       password: loginPwd,
     };
 
-    fetch("http://localhost:8080/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((response) => {
-        if (response.status == 401) {
-          alert("Invalid email or password");
-          throw new Error("Invalid email or password");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Success:", data);
-        localStorage.setItem("token", JSON.stringify(data));
-        navigate("/Homepage");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    try {
+      const data = await loginUser(user);
+      localStorage.setItem("token", JSON.stringify(data));
+      console.log("User logged in", data);
+      navigate("/Homepage");
+    } catch {
+      alert("Invalid email or password");
+    }
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
 
     const user = {
@@ -55,28 +41,12 @@ export function WelcomePage() {
       password: signupPwd,
     };
 
-    fetch("http://localhost:8080/auth/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          alert("Username already use");
-          throw new Error("Username already use");
-        }
-
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Success:", data);
-        // navigate("/Homepage");
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
+    try {
+      const data = await registerUser(user);
+      console.log("User registered", data);
+    } catch {
+      alert("Username already in use");
+    }
   };
 
   return (

@@ -1,5 +1,5 @@
 import styles from "./Navbar.module.scss";
-import { CustomLink } from "../../helpers/Utils";
+import { CustomLink } from "../../helpers/CustomLink";
 
 export function Navbar() {
   return (

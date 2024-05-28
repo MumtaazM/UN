@@ -34,6 +34,9 @@ public class AuthenticationService {
             throw new IllegalArgumentException("Username already exists");
         }
         else{
+            System.out.println("User: " + input.getName());
+            user.setName(input.getName());
+            System.out.println("User: " + user.getName());
             user.setUsername(input.getUsername());
             user.setPassword(passwordEncoder.encode(input.getPassword()));
             if(input.getRole() == null){

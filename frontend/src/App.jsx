@@ -4,16 +4,20 @@ import { Navbar } from "./AppComponents/Navbar/Navbar";
 import { NewTaskPage } from "./Pages/NewTaskPage/NewTaskPage";
 import { TaskPage } from "./Pages/TaskPage/TaskPage";
 import { Settings } from "./Pages/Settings/Settings";
-import Homepage from "./Pages/Homepage/Homepage.jsx";
+import { Homepage } from "./Pages/Homepage/Homepage.jsx";
+import { Loginpage } from "./Pages/LoginPage/LoginPage.jsx";
+import { Registerpage } from "./Pages/Registerpage/Registerpage.jsx";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
     <Routes>
-      <Route exact path="/" element={<WelcomePage />} />
+      {/* <Route exact path="/" element={<WelcomePage />} /> */}
+      <Route exact path="/" element={<Loginpage />} />
+      <Route exact path="/register" element={<Registerpage />} />
       <Route path="/ForgotPWPage" element={<ForgotPWPage />} />
       <Route
-        path="/Homepage"
+        path="/home"
         element={
           <>
             <Navbar />

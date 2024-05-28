@@ -1,13 +1,19 @@
 import styles from "./Homepage.module.scss";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { decodeToken } from "../../helpers/DecodeToken";
 
-const Homepage = () => {
+export const Homepage = () => {
   const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [toggleState, setToggleState] = useState(1);
 
   const apiUrl = import.meta.env.VITE_BASE_API_URL;
+  const token = JSON.parse(localStorage.getItem("token"));
+  const userId = decodeToken(token.jwt).userId;
+  const name = decodeToken(token.jwt).name;
+
+  console.log(decodeToken(token.jwt));
 
   const findCompletedTasks = (tasks) => {
     return tasks.filter((task) => task.status === "COMPLETED");
@@ -15,25 +21,6 @@ const Homepage = () => {
   const findOngoingTasks = (tasks) => {
     return tasks.filter((task) => task.status === "IN_PROGRESS");
   };
-
-  const token = JSON.parse(localStorage.getItem("token"));
-
-  function parseJwt(token) {
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const jsonPayload = decodeURIComponent(
-      atob(base64)
-        .split("")
-        .map(function (c) {
-          return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-        })
-        .join("")
-    );
-
-    return JSON.parse(jsonPayload);
-  }
-
-  const userId = parseJwt(token.jwt).userId;
 
   useEffect(() => {
     if (!token) {
@@ -71,7 +58,9 @@ const Homepage = () => {
         <h1 className={styles.logo}>Union</h1>
         <button>Edit</button>
         <div className={styles.text}>
-          <h2>Hi Mumtaaz,</h2>
+          <h2>
+            Hello <span className={styles.name}>{name}</span>,
+          </h2>
           <p>Here are your daily tasks</p>
         </div>
       </div>

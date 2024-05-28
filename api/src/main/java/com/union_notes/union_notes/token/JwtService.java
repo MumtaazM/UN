@@ -34,6 +34,10 @@ public class JwtService {
         return extractClaim(token, claims -> claims.get("userId", Integer.class));
     }
 
+    public String extractName(String token) {
+        return extractClaim(token, claims -> claims.get("name", String.class));
+    }
+
     public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
@@ -41,8 +45,9 @@ public class JwtService {
 
     public String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        if (userDetails instanceof MyUser) { // Replace MyUserDetails with your user class
-            claims.put("userId", ((MyUser) userDetails).getId()); // Replace getId() with your method to get the user's ID
+        if (userDetails instanceof MyUser) { 
+            claims.put("userId", ((MyUser) userDetails).getId()); 
+            claims.put("name", ((MyUser) userDetails).getName());
         }
         return generateToken(claims, userDetails);
     }
