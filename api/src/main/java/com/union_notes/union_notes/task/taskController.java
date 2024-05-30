@@ -12,15 +12,21 @@ import java.util.Optional;
 @RequestMapping("/api/tasks")
 public class taskController {
 
-    private final taskRepository repository;
+    private final TaskRepository repository;
 
-    taskController(taskRepository repository) {
+    taskController(TaskRepository repository) {
         this.repository = repository;
     }
 
-    @GetMapping("/all/{id}")
-    List<Task> findAllByUserId(@PathVariable Integer id) {
-        return repository.findAllByUserId(id);
+    @GetMapping("/greet")
+    String greet() {
+        System.out.println("hello");
+        return "hello";
+    }
+
+    @GetMapping("/all/{userId}")
+    List<Task> findAllByUserId(@PathVariable Integer userId) {
+        return repository.findAllByUserId(userId);
     }
 
     @GetMapping("/{id}")
@@ -34,9 +40,10 @@ public class taskController {
     }
 
     @ResponseStatus(HttpStatus.CREATED)
-    @PostMapping("")
-    void create(@RequestBody Task task) {
-        repository.create(task);
+    @PostMapping("/{userId}")
+    void create(@RequestBody Task task,  @PathVariable Integer userId) {
+        System.out.println("create task");
+        repository.create(task, userId);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

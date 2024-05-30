@@ -2,10 +2,12 @@ import styles from "./NewTaskPage.module.scss";
 import TextareaAutosize from "react-textarea-autosize";
 import Datepicker from "../../AppComponents/Datepicker/Datepicker";
 import { useState } from "react";
-// import { format } from "date-fns";
+import { decodeToken } from "../../helpers/DecodeToken";
 
 export function NewTaskPage() {
   const apiUrl = import.meta.env.VITE_BASE_API_URL;
+  const token = JSON.parse(localStorage.getItem("token"));
+  const userId = decodeToken(token.jwt).userId;
 
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
@@ -27,7 +29,7 @@ export function NewTaskPage() {
 
     console.log(task);
 
-    const response = await fetch(`${apiUrl}/api/tasks`, {
+    const response = await fetch(`${apiUrl}/api/tasks/${userId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

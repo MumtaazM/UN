@@ -29,7 +29,7 @@ public class AuthenticationController {
             MyUser registeredUser = authenticationService.signup(request);
             return ResponseEntity.ok(registeredUser);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("Account already exists");
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Exception occurred: " + e.getMessage());
         }
     }
 

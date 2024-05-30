@@ -5,13 +5,6 @@ spring:
     password: ${PROD_DB_PASS}
     name: union notes
 
-  sql:
-    init:
-      mode: always
-  jpa:
-    hibernate:
-      ddl-auto: update
-
 server:
   address: 0.0.0.0
   port: ${PORT}

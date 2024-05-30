@@ -13,7 +13,7 @@ export const Homepage = () => {
   const userId = decodeToken(token.jwt).userId;
   const name = decodeToken(token.jwt).name;
 
-  console.log(decodeToken(token.jwt));
+  console.log(token.jwt);
 
   const findCompletedTasks = (tasks) => {
     return tasks.filter((task) => task.status === "COMPLETED");

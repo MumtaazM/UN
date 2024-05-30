@@ -6,26 +6,21 @@ export function Navbar() {
     <>
       <nav className={styles.mobile_nav}>
         <ul>
-          <li>
-            <a href="">
-              <img src="src/assets/home_light.svg" alt="" />
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <img src="src/assets/Add_light.svg" alt="" />
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <img src="src/assets/Setting_light.svg" alt="" />
-            </a>
-          </li>
-          <li>
-            <a href="">
-              <img src="src/assets/Sign_out_light.svg" alt="" />
-            </a>
-          </li>
+          <CustomLink to="/home">
+            <img src="src/assets/home_light.svg" alt="" />
+          </CustomLink>
+
+          <CustomLink to="/NewTaskPage">
+            <img src="src/assets/Add_light.svg" alt="" />
+          </CustomLink>
+
+          <CustomLink to="/Settings">
+            <img src="src/assets/Setting_light.svg" alt="" />
+          </CustomLink>
+
+          <CustomLink to="/">
+            <img src="src/assets/Sign_out_light.svg" alt="" />
+          </CustomLink>
         </ul>
       </nav>
 
@@ -33,9 +28,11 @@ export function Navbar() {
         <h1>Union</h1>
         <hr />
         <ul>
-          <CustomLink to="/Homepage">Home</CustomLink>
+          <CustomLink to="/home">Home</CustomLink>
           <CustomLink to="/NewTaskPage">Add Task</CustomLink>
-          <CustomLink to="/Settings">Settings</CustomLink>
+          <CustomLink to="/Settings" mobile="false">
+            Settings
+          </CustomLink>
           <CustomLink to="/">
             <button>Logout</button>
           </CustomLink>

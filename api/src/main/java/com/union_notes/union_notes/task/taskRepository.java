@@ -11,12 +11,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.util.Assert;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public class taskRepository {
+public class TaskRepository {
     private final JdbcClient jdbcClient;
 
-    public taskRepository(JdbcClient jdbcClient) {
+    public TaskRepository(JdbcClient jdbcClient) {
         this.jdbcClient = jdbcClient;
     }
 
@@ -36,14 +37,14 @@ public class taskRepository {
         
     }
 
-    void create(Task task) {
+    void create(Task task, Integer userId) {
         
         try {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date deadline = formatter.parse(task.deadline());
     
             var updated = jdbcClient.sql("insert into task(title, description, deadline, status, user_id) values(?, ?, ?, ?, ?)")
-                    .params(List.of(task.title(), task.description(), deadline, task.status().toString(), 1))
+                    .params(List.of(task.title(), task.description(), deadline, task.status().toString(), userId))
                     .update();
             Assert.isTrue(updated == 1, "Failed to create task " + task.title());
         } catch (Exception e) {

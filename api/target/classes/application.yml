@@ -3,7 +3,12 @@ spring:
     active: dev
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
+  flyway:
+    locations: classpath:db.migration
+    baseline-on-migrate: false
+    baseline-version: 0
+    clean-disabled: false
 security:
   jwt:
     secret-key: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b

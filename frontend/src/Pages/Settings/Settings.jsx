@@ -1,4 +1,5 @@
 import styles from "./Settings.module.scss";
+import { useLocation } from "react-router-dom";
 
 export function Settings() {
   return (
