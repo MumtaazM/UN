@@ -122,11 +122,11 @@
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
 				<version>9.22.3</version>
-				<configuration>
+				<!-- <configuration>
 					<url>jdbc:postgresql://${env.PROD_DB_HOST}:${env.PROD_DB_PORT}/${env.PROD_DB_NAME}</url>
 					<user>${env.PROD_DB_USER}</user>
 					<password>${env.PROD_DB_PASS}</password>
-				</configuration>
+				</configuration> -->
 				<!-- <configuration>
 					<url>jdbc:postgresql://localhost:5432/union_notes</url>
 					<user>taaz</user>
