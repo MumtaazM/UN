@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/tasks")
-public class taskController {
+public class TaskController {
 
     private final TaskRepository repository;
 
