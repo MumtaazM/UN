@@ -1,11 +1,11 @@
 .rdp {
-  --rdp-cell-size: 35px;
+  --rdp-cell-size: 40%;
   /* Size of the day cells. */
   --rdp-caption-font-size: 20px;
   /* Font size for the caption labels. */
   --rdp-accent-color: #ad9f86;
   /* Accent color for the background of selected days. */
-  --rdp-background-color: #d0c3b2;
+  --rdp-background-color: #aea69a;
   /* Background color for the hovered/focused elements. */
   --rdp-accent-color-dark: #ad9f86;
   /* Accent color for the background of selected days (to use in dark-mode). */
@@ -18,18 +18,97 @@
   --rdp-selected-color: #fff;
   /* Color of selected day text */
 
-  margin: 1rem 0rem;
+  margin: 0rem 0rem;
+}
+
+.rdp {
+  --rdp-cell-size: 4rem;
+}
+
+// Desktop view sizes
+@media (min-width: 650px) {
+  .rdp {
+    --rdp-cell-size: 2.8rem;
+  }
+}
+
+@media (min-width: 750px) {
+  .rdp {
+    --rdp-cell-size: 3rem;
+  }
+}
+
+@media (min-width: 800px) {
+  .rdp {
+    --rdp-cell-size: 4rem;
+  }
+}
+
+@media (min-width: 850px) {
+  .rdp {
+    --rdp-cell-size: 4.5rem;
+  }
+}
+
+// Mobile view sizes
+@media (max-width: 600px) {
+  .rdp {
+    --rdp-cell-size: 3rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .rdp {
+    --rdp-cell-size: 2.5rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .rdp {
+    --rdp-cell-size: 2rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .rdp {
+    --rdp-cell-size: 1.5rem;
+  }
+}
+
+@media (max-width: 310px) {
+  .rdp {
+    --rdp-cell-size: 1.2rem;
+  }
+}
+
+.calendar {
+  max-width: 35rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // align-items: center;
+  padding: 2rem;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 10px;
 }
 
 .deadline_input {
-  background-color: #fff;
-  width: 15rem;
+  background: none;
+  width: 100%;
+  margin-left: 0.4rem;
+  margin-bottom: 1rem;
   border: none;
-  border-radius: 10px;
-  padding: 1rem;
+
   font-size: 1.2rem;
+  color: rgb(184, 10, 10);
+  font-weight: 600;
 }
 
 .deadline_input:focus-visible {
   border: none;
+}
+
+.deadline-txt {
+  font-size: 1.3rem;
+  color: rgb(0, 0, 0);
 }

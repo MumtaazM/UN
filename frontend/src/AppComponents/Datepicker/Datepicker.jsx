@@ -17,8 +17,8 @@ export default function Datepicker({ selected, setSelected }) {
 
   return (
     <>
-      <label htmlFor="date">
-        Deadline
+      <p className="deadline-txt">Deadline</p>
+      <div className="calendar">
         <input
           id="date"
           className="deadline_input"
@@ -29,8 +29,9 @@ export default function Datepicker({ selected, setSelected }) {
           onFocus={handleBlur}
           readOnly
         />
+
         <DayPicker mode="single" selected={selected} onSelect={setSelected} />
-      </label>
+      </div>
     </>
   );
 }

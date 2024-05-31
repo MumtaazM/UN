@@ -2,15 +2,16 @@ package com.union_notes.union_notes.authentication;
 
 public class AuthenticationRequest {
     private String name;
-    private String username;
+    private String email;
+    private String password;
+    private String role;
+    
     public String getName() {
         return name;
     }
     public void setName(String name) {
         this.name = name;
     }
-    private String password;
-    private String role;
     
     public String getRole() {
         return role;
@@ -18,11 +19,11 @@ public class AuthenticationRequest {
     public void setRole(String role) {
         this.role = role;
     }
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email= email;
     }
     public String getPassword() {
         return password;

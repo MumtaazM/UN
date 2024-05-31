@@ -57,8 +57,8 @@ public class TaskRepository {
             SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             Date deadline = formatter.parse(task.deadline());
     
-            var updated = jdbcClient.sql("update task set title = ?, description = ?, deadline = ?, status = ?, user_id = ? where id = ?")
-                .params(List.of(task.title(), task.description(), deadline, task.status().toString(), 1, id))
+            var updated = jdbcClient.sql("update task set title = ?, description = ?, deadline = ?, status = ? where id = ?")
+                .params(List.of(task.title(), task.description(), deadline, task.status().toString(), id))
                 .update();
 
             Assert.isTrue(updated == 1, "Failed to create task " + task.title());

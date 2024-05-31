@@ -1,16 +1,20 @@
 .container {
   min-height: 100vh;
   padding: 0.5rem 2rem;
-  margin-bottom: 15rem;
+  margin-bottom: 8rem;
 
   .logo {
+    position: absolute;
+    top: 0.3rem;
+    left: 1rem;
+
     font-weight: 600;
-    font-size: 1.8rem;
   }
 
   form {
-    width: 90%;
-    margin-top: 3rem;
+    width: 100%;
+    max-width: 35rem;
+    margin-top: 5rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -26,58 +30,42 @@
     }
 
     .task_title {
-      background-color: rgb(226, 226, 226);
-      border-radius: 10px;
+      background-color: transparent;
       border: none;
-      padding: 1rem;
-      font-size: 1.5rem;
+      border-bottom: 1px solid black;
+      font-size: 1.2rem;
       resize: none;
+      font-family: "Inter";
+      padding-block: 1rem;
+    }
+
+    .task_title:focus,
+    .task_description:focus {
+      outline: none;
     }
 
     .task_description {
-      background-color: white;
-      border-radius: 10px;
+      font-family: "Inter";
+      background: none;
       border: none;
-      padding: 1rem;
+      border-bottom: 1px solid black;
       font-size: 1.2rem;
       resize: none;
+      padding-block: 1rem;
     }
 
     .state_container {
       position: relative;
     }
 
-    .state_container::before,
-    .state_container::after {
-      --size: 0.3rem;
-      position: absolute;
-      content: "";
-      right: 1rem;
-      pointer-events: none;
-    }
-
-    .state_container::before {
-      border-left: var(--size) solid transparent;
-      border-right: var(--size) solid transparent;
-      border-bottom: var(--size) solid black;
-      top: 65%;
-    }
-
-    .state_container::after {
-      border-left: var(--size) solid transparent;
-      border-right: var(--size) solid transparent;
-      border-top: var(--size) solid black;
-      top: 75%;
-    }
-
     .task_state {
+      background: none;
+      border-radius: 5px;
+      border: 1px solid black;
       appearance: none;
-      /* safari */
       -webkit-appearance: none;
-
+      -moz-appearance: none; // For Firefox
       height: 3rem;
-      border: none;
-      border-radius: 10px;
       padding-inline: 1rem;
       font-family: "Inter";
       font-weight: 600;
@@ -89,7 +77,7 @@
     }
 
     .create_task {
-      background-color: white;
+      background: none;
       padding: 1.5rem;
       border: 2px solid black;
       border-radius: 10px;
@@ -98,6 +86,20 @@
       font-weight: 600;
     }
     .create_task:hover {
+      cursor: pointer;
+    }
+
+    .delete_task {
+      background: none;
+      padding: 1.5rem;
+      color: rgb(205, 4, 4);
+      border: 2px solid rgb(205, 4, 4);
+      border-radius: 10px;
+      font-family: "Inter";
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .delete_task:hover {
       cursor: pointer;
     }
   }

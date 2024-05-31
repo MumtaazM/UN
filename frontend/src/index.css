@@ -5,14 +5,14 @@
 }
 
 body {
-    background-color: #EEEEEE;
+    background-color: #fafafa;
 }
 
 #root {
     font-family: 'Poppins', sans-serif;
     width: 100%;
     min-height: 100vh;
-    background-color: #EEEEEE;
+    background-color: #fafafa;
 }
 
 button:hover {

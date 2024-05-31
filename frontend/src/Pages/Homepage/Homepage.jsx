@@ -1,17 +1,17 @@
 import styles from "./Homepage.module.scss";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { decodeToken } from "../../helpers/DecodeToken";
+import { fetchAllTasks } from "../../helpers/Api";
 
 export const Homepage = () => {
   const [loading, setLoading] = useState(false);
   const [tasks, setTasks] = useState([]);
   const [toggleState, setToggleState] = useState(1);
 
-  const apiUrl = import.meta.env.VITE_BASE_API_URL;
-  const token = JSON.parse(localStorage.getItem("token"));
-  const userId = decodeToken(token.jwt).userId;
-  const name = decodeToken(token.jwt).name;
+  const [token, setToken] = useState(JSON.parse(localStorage.getItem("token")));
+  const userId = useMemo(() => decodeToken(token.jwt).userId, [token]);
+  const name = useMemo(() => decodeToken(token.jwt).name, [token]);
 
   console.log(token.jwt);
 
@@ -23,31 +23,24 @@ export const Homepage = () => {
   };
 
   useEffect(() => {
-    if (!token) {
-      navigate("/");
-    }
-    fetch(`${apiUrl}/api/tasks/all/${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token.jwt}`,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+    const fetchTasks = async () => {
+      try {
+        if (!token) {
+          navigate("/");
+        } else {
+          const data = await fetchAllTasks(userId, token.jwt);
+          console.log("Tasks fetched", data);
+          setTasks(data);
+          setLoading(false);
         }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Success:", data);
-        setTasks(data);
-        setLoading(false);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error:", error);
-        console.log(`${apiUrl}/api/tasks/`);
-        setLoading(false);
-      });
-  }, []);
+        alert("Failed to fetch tasks");
+      }
+    };
+
+    fetchTasks();
+  }, [token, userId]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -87,10 +80,12 @@ function Cards({ tasks }) {
         {Array.isArray(tasks) ? (
           tasks.map((task) => {
             let taskDate = new Date(task.deadline);
+
             let formattedDate = taskDate.toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",
+              timeZone: "UTC",
             });
 
             return (

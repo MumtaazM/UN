@@ -3,8 +3,11 @@ import TextareaAutosize from "react-textarea-autosize";
 import Datepicker from "../../AppComponents/Datepicker/Datepicker";
 import { useState } from "react";
 import { decodeToken } from "../../helpers/DecodeToken";
+import { useNavigate } from "react-router-dom";
+import { createTask } from "../../helpers/Api";
 
 export function NewTaskPage() {
+  const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_BASE_API_URL;
   const token = JSON.parse(localStorage.getItem("token"));
   const userId = decodeToken(token.jwt).userId;
@@ -29,23 +32,15 @@ export function NewTaskPage() {
 
     console.log(task);
 
-    const response = await fetch(`${apiUrl}/api/tasks/${userId}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(task),
-    });
+    console.log(task);
 
-    if (!response.ok && response.status !== 201) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    try {
+      const data = await createTask(userId, task, token); // replace token with your actual token
 
-    if (response.status === 201) {
-      console.log("Task created successfully");
-    } else {
-      const data = await response.json();
-      console.log(data);
+      console.log("Task created successfully", data);
+      navigate("/home");
+    } catch (error) {
+      console.error(`HTTP error! status: ${error.message}`);
     }
   };
 
@@ -85,7 +80,7 @@ export function NewTaskPage() {
               className={styles.task_description}
               id="task_description"
               name="task_description"
-              minRows={4}
+              minRows={1}
               autoFocus
               value={taskDescription}
               onChange={(event) => {
@@ -108,7 +103,13 @@ export function NewTaskPage() {
               <option value="COMPLETED">Completed</option>
             </select>
           </label>
-          <Datepicker selected={taskDeadline} setSelected={handleDateChange} />
+          <div className="calendar-container">
+            <Datepicker
+              selected={taskDeadline}
+              setSelected={handleDateChange}
+            />
+          </div>
+
           <button id="create_task" className={styles.create_task}>
             Create new task
           </button>

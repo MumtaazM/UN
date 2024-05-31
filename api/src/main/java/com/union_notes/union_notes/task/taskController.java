@@ -18,12 +18,6 @@ public class taskController {
         this.repository = repository;
     }
 
-    @GetMapping("/greet")
-    String greet() {
-        System.out.println("hello");
-        return "hello";
-    }
-
     @GetMapping("/all/{userId}")
     List<Task> findAllByUserId(@PathVariable Integer userId) {
         return repository.findAllByUserId(userId);

@@ -1,5 +1,6 @@
 package com.union_notes.union_notes.user;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,26 +17,19 @@ public class MyUserDetailsService implements UserDetailsService {
     private MyUserRepository repository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<MyUser> user = repository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        MyUser user = repository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + email));
 
-        if(user.isPresent()){
-            var userObj = user.get();
-            return User.builder()
-            .username(userObj.getUsername())
-            .password(userObj.getPassword())
-            .roles(getRoles(userObj))
-            .build();
-        } else{
-            throw new UsernameNotFoundException(username + " not found");
-        }
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
     }
+    
 
-    private String[] getRoles(MyUser user){
-        if(user.getRole() == null){
-            return new String[]{"USER"};
-        }
-        return user.getRole().split(",");
-    }
+    // private String[] getRoles(MyUser user){
+    //     if(user.getRole() == null){
+    //         return new String[]{"USER"};
+    //     }
+    //     return user.getRole().split(",");
+    // }
     
 }

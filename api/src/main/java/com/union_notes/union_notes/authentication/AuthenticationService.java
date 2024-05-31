@@ -30,14 +30,13 @@ public class AuthenticationService {
     public MyUser signup(AuthenticationRequest input) {
         MyUser user = new MyUser();
 
-        if(userRepository.findByUsername(input.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("Username already exists");
+        if(userRepository.findByEmail(input.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("Email already exists");
         }
         else{
             System.out.println("User: " + input.getName());
             user.setName(input.getName());
-            System.out.println("User: " + user.getName());
-            user.setUsername(input.getUsername());
+            user.setEmail(input.getEmail());
             user.setPassword(passwordEncoder.encode(input.getPassword()));
             if(input.getRole() == null){
                user.setRole("USER");
@@ -55,15 +54,15 @@ public class AuthenticationService {
         try{
             authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        input.getUsername(),
+                        input.getEmail(),
                         input.getPassword()
                 )
         );
         }catch(Exception e){
-            throw new IllegalArgumentException("Invalid username/password");
+            throw new IllegalArgumentException("Invalid email/password");
         }
 
-        return userRepository.findByUsername(input.getUsername())
+        return userRepository.findByEmail(input.getEmail())
                 .orElseThrow();
     }
 }

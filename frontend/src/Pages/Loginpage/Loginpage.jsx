@@ -8,12 +8,13 @@ export const Loginpage = () => {
   const navigate = useNavigate();
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPwd, setLoginPwd] = useState("");
+  const [loginError, setLoginError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     const user = {
-      username: loginEmail,
+      email: loginEmail,
       password: loginPwd,
     };
 
@@ -23,7 +24,7 @@ export const Loginpage = () => {
       console.log("User logged in", data);
       navigate("/home");
     } catch {
-      alert("Invalid email or password");
+      setLoginError("Invalid credentials");
     }
   };
 
@@ -38,6 +39,7 @@ export const Loginpage = () => {
         <main className={styles.main}>
           <form id="login-form" onSubmit={handleLogin}>
             <h2>Login</h2>
+            {loginError && <p className={styles.error}>{loginError}</p>}
             <div className={styles.input_group}>
               <label htmlFor="login-email">
                 EMAIL

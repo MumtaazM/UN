@@ -19,7 +19,7 @@ public class MyUser implements UserDetails {
     @SequenceGenerator(name="users_seq_gen", sequenceName="users_seq", allocationSize=1)
     private Long id;
     @Column(unique = true)
-    private String username;
+    private String email;
     private String name;
     private String password;
     private String role;
@@ -37,10 +37,17 @@ public class MyUser implements UserDetails {
         this.id = id;
     }
     public String getUsername() {
-        return username;
+        return email;
     }
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String email) {
+        this.email = email;
+    }
+    public String getEmail() {
+        return email;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
     }
     public String getPassword() {
         return password;
@@ -57,7 +64,6 @@ public class MyUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(role));
         return authorities;
     }
     @Override

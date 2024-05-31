@@ -3,20 +3,20 @@ import { useLocation } from "react-router-dom";
 import TextareaAutosize from "react-textarea-autosize";
 import Datepicker from "../../AppComponents/Datepicker/Datepicker";
 import { useState, useEffect } from "react";
-// import { set } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import { updateTask, deleteTask } from "../../helpers/Api";
+import { decodeToken } from "../../helpers/DecodeToken";
 
 export function TaskPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state;
+  const token = JSON.parse(localStorage.getItem("token"));
 
   const [taskDeadline, setTaskDeadline] = useState(null);
   const [taskTitle, setTaskTitle] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [taskStatus, setTaskStatus] = useState("IN_PROGRESS");
-
-  const apiUrl = import.meta.env.VITE_BASE_API_URL;
 
   useEffect(() => {
     if (data) {
@@ -27,7 +27,7 @@ export function TaskPage() {
     }
   }, [data]);
 
-  const updateTask = async (id) => {
+  const handleUpdateTask = async (id) => {
     //change format of date for api
     const fdate = taskDeadline.toISOString().split("T")[0];
 
@@ -41,35 +41,24 @@ export function TaskPage() {
     console.log(task);
 
     try {
-      const response = await fetch(`${apiUrl}/api/tasks/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(task),
-      });
+      const data = await updateTask(id, task, token); // replace token with your actual token
 
-      if (response.status === 204) {
-        console.log("Task updated successfully");
-        navigate("/Homepage");
-      } else {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+      console.log("Task updated successfully", data);
+      navigate("/home");
     } catch (error) {
       console.error("An error occurred while updating the resource:", error);
     }
   };
 
-  const deleteTask = async (id) => {
+  const handleDeleteTask = async (id) => {
     try {
-      const response = await fetch(`${apiUrl}/api/tasks/${id}`, {
-        method: "DELETE",
-      });
-      if (response.status === 204) {
+      const status = await deleteTask(id, token); // replace token with your actual token
+
+      if (status === 204) {
         console.log("Task deleted successfully");
-        navigate("/Homepage");
+        navigate("/home");
       } else {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${status}`);
       }
     } catch (error) {
       console.error("An error occurred while deleting the resource:", error);
@@ -82,6 +71,7 @@ export function TaskPage() {
       <main>
         <form>
           <label htmlFor="task_title">
+            Title
             <TextareaAutosize
               className={styles.task_title}
               minRows={1}
@@ -94,11 +84,12 @@ export function TaskPage() {
             />
           </label>
           <label htmlFor="task_description">
+            Description
             <TextareaAutosize
               className={styles.task_description}
               id="task_description"
               name="task_description"
-              minRows={4}
+              minRows={1}
               value={taskDescription}
               onChange={(e) => {
                 setTaskDescription(e.target.value);
@@ -106,7 +97,6 @@ export function TaskPage() {
             />
           </label>
           <label htmlFor="task_state" className={styles.state_container}>
-            State
             <select
               className={styles.task_state}
               name="task_state"
@@ -124,9 +114,9 @@ export function TaskPage() {
           <button
             id="create_task"
             className={styles.create_task}
-            onClick={() => {
+            onClick={(event) => {
               event.preventDefault();
-              updateTask(data.id);
+              handleUpdateTask(data.id);
             }}
           >
             Update
@@ -134,9 +124,9 @@ export function TaskPage() {
           <button
             id="delete_task"
             className={styles.delete_task}
-            onClick={() => {
+            onClick={(event) => {
               event.preventDefault();
-              deleteTask(data.id);
+              handleDeleteTask(data.id);
             }}
           >
             Delete
