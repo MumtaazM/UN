@@ -1,11 +1,11 @@
-import { WelcomePage } from "./Pages/WelcomePage/WelcomePage";
+import { WelcomePage } from "./Pages/WelcomePage/WelcomePage.js";
 import { ForgotPWPage } from "/src/Pages/ForgotPWPage/ForgotPWPage";
-import { Navbar } from "./AppComponents/Navbar/Navbar";
-import { NewTaskPage } from "./Pages/NewTaskPage/NewTaskPage";
-import { TaskPage } from "./Pages/TaskPage/TaskPage";
-import { Settings } from "./Pages/Settings/Settings";
-import { Homepage } from "./Pages/Homepage/Homepage.jsx";
-import { Loginpage } from "./Pages/LoginPage/LoginPage.jsx";
+import { Navbar } from "./AppComponents/Navbar/Navbar.js";
+import { NewTaskPage } from "./Pages/NewTaskPage/NewTaskPage.js";
+import { TaskPage } from "./Pages/TaskPage/TaskPage.js";
+import { Settings } from "./Pages/Settings/Settings.js";
+import { Homepage } from "./Pages/Homepage/Homepage.js";
+import { Loginpage } from "./Pages/Loginpage/Loginpage.js";
 import { Registerpage } from "./Pages/Registerpage/Registerpage.jsx";
 import { Route, Routes } from "react-router-dom";
 
